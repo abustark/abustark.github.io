@@ -1,0 +1,194 @@
+/* Reset default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Define global light theme variables */
+:root {
+  --bg-color: #ecf0f1; /* Light background */
+  --text-color: #2c3e50; /* Dark grayish blue */
+  --primary-color: #1abc9c; /* Emerald */
+  --secondary-color: #34495e; /* Midnight blue */
+  --border-color: #1abc9c;
+  --button-bg: #1abc9c;
+  --button-hover-bg: #16a085;
+  --header-bg: #34495e; /* Midnight Blue */
+}
+
+/* Light Mode Styling */
+body {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  margin: 0;
+}
+
+/* Header Styles */
+header {
+  background: var(--header-bg);
+  color: white;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+header nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+header nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+header nav ul li a:hover {
+  color: var(--primary-color); /* Emerald */
+}
+
+/* Section Styles */
+section {
+  padding: 2rem;
+  margin: 1.5rem auto;
+  max-width: 900px;
+  background: white;
+  border-radius: 10px;
+  border-left: 4px solid var(--border-color); /* Emerald */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2, h3 {
+  color: var(--secondary-color); /* Midnight Blue */
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+/* Footer Styles */
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: var(--header-bg);
+  color: white;
+}
+
+/* Button Styles */
+a[download] {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  background: var(--button-bg);
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+a[download]:hover {
+  background: var(--button-hover-bg); /* Slightly darker Emerald */
+}
+
+/* Project Grid */
+.project {
+  margin-bottom: 2rem;
+}
+
+/* Dark Mode Styling (Overrides for Dark Mode) */
+body.dark-mode {
+  --bg-color: #2c3e50; /* Dark background */
+  --text-color: #ecf0f1; /* Light text */
+  --primary-color: #3498db; /* Light Blue */
+  --secondary-color: #1abc9c; /* Emerald */
+  --border-color: #3498db; /* Light Blue */
+  --button-bg: #3498db; /* Light Blue */
+  --button-hover-bg: #2980b9; /* Darker Blue */
+  --header-bg: #1abc9c; /* Emerald */
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* Section Styles (Override for Dark Mode) */
+body.dark-mode section {
+  background-color: #34495e; /* Darker section background */
+  border-left: 4px solid var(--border-color);
+}
+
+/* Footer Styles (Override for Dark Mode) */
+body.dark-mode footer {
+  background: var(--header-bg); /* Emerald footer */
+}
+
+/* Dark Mode Toggle Button */
+#dark-mode-toggle {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  background: #ccc;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+/* When dark mode is enabled, change button background */
+#dark-mode-toggle.active {
+  background: #1abc9c; /* Dark mode active background */
+}
+
+/* Icon inside the toggle button (emoji transition) */
+#dark-mode-toggle .toggle-icon {
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+/* Emoji positioning */
+#sun-icon {
+  display: inline;
+}
+
+#moon-icon {
+  display: none;
+}
+
+/* When dark mode is enabled, show the moon icon and hide the sun icon */
+body.dark-mode #sun-icon {
+  display: none;
+}
+
+body.dark-mode #moon-icon {
+  display: inline;
+}
+
+/* Hover effect for toggle button */
+#dark-mode-toggle:hover {
+  transform: scale(1.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  header nav ul {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  section {
+    padding: 1.5rem;
+  }
+
+  a[download] {
+    width: 100%;
+    text-align: center;
+  }
+}
