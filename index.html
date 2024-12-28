@@ -16,11 +16,12 @@
         <li><a href="#about">About Me</a></li>
         <li><a href="#looking-for-job">Career Objectives</a></li>
       </ul>
-        <!-- Dark Mode Toggle -->
-    <button id="dark-mode-toggle">
-      <span id="sun-icon" class="toggle-icon">🌙</span>
-      <span id="moon-icon" class="toggle-icon" style="display: none;">🌞</span>
-    </button>
+      <!-- Slide Toggle for Dark Mode -->
+      <div id="dark-mode-toggle" class="toggle-switch">
+        <div class="slider"></div>
+        <span id="sun-icon" class="icon">☀️</span>
+        <span id="moon-icon" class="icon">🌙</span>
+      </div>
     </nav>
   </header>
 
@@ -28,7 +29,7 @@
   <section id="home">
     <h1>Your Name</h1>
     <p>Welcome to my portfolio website! I'm a passionate ML Data Associate.</p>
-    <a href="your-resume.pdf" download>Download Resume</a>
+    <a href="your-resume.pdf" download class="css-button-arrow--sky">Download Resume</a>
   </section>
 
   <!-- Projects Section -->
@@ -37,12 +38,10 @@
     <div class="project">
       <h3>Undergraduate Project</h3>
       <p>E-commerce site for digital products</p>
-      <!-- Optionally include project links or images -->
     </div>
     <div class="project">
       <h3>Postgraduate Project</h3>
       <p>House price prediction using machine learning algorithms</p>
-      <!-- Optionally include project links or images -->
     </div>
   </section>
 
@@ -64,6 +63,6 @@
     <p>Connect with me: <a href="https://www.linkedin.com/in/your-profile" target="_blank">LinkedIn</a></p>
   </footer>
 
-  <script src="main.js"></script> <!-- External JS for animations or interactions -->
+  <script src="main.js"></script> <!-- External JS -->
 </body>
 </html>
