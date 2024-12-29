@@ -22,7 +22,7 @@ body {
   font-family: 'Roboto', sans-serif;
   line-height: 1.6;
   color: var(--text-color);
-  background-color: var(--bg-color);
+  background: linear-gradient(to right, #9b59b6, #ff69b4, #add8e6); /* Gradient Background */
 }
 
 /* Header Styles */
@@ -50,16 +50,19 @@ header nav ul li a:hover {
   color: var(--primary-color);
 }
 
-/* Section Styles */
 section {
+  background-color: rgba(255, 255, 255, 0.4); /* Slightly transparent white */
+  backdrop-filter: blur(8px); /* Frosted glass effect */
+  -webkit-backdrop-filter: blur(10px); /* Safari support */
   padding: 2rem;
   margin: 1.5rem auto;
   max-width: 900px;
-  background: white;
   border-radius: 10px;
   border-left: 4px solid var(--border-color);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative; /* Needed for backdrop-filter to work */
 }
+
 
 h1, h2, h3 {
   color: var(--secondary-color);
@@ -68,6 +71,17 @@ h1, h2, h3 {
 p {
   margin-bottom: 1rem;
 }
+
+/* this is new code */
+#home h1 {
+  background: linear-gradient(to right, #9b59b6, #e91e63, #3498db); /* Gradient: Purple, Pink, Light Blue */
+  -webkit-background-clip: text; /* Clip the background to the text */
+  color: transparent; /* Make the text transparent so the gradient shows */
+  font-size: 2.5rem; /* Adjust the size as per your design */
+  font-weight: bold; /* Makes the text bold */
+}
+
+
 
 /* Footer Styles */
 footer {
@@ -186,6 +200,7 @@ body.dark-mode section {
 body.dark-mode footer {
   background: var(--primary-color);
 }
+
 /* Add this at the end of your CSS file */
 
 /* Responsive Design: Mobile Devices */
