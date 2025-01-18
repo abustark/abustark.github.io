@@ -1,4 +1,6 @@
+// Ensure the DOM is fully loaded before executing
 document.addEventListener("DOMContentLoaded", () => {
+  // Dark mode toggle functionality
   const darkModeToggle = document.getElementById("dark-mode-toggle");
   const slider = darkModeToggle.querySelector(".slider");
   const sunIcon = document.getElementById("sun-icon");
@@ -44,4 +46,39 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("theme", "light");
     }
   });
+
+  // Reusable function for collapsible sections
+function initializeCollapsible(toggleSelector, contentSelector) {
+  // Select all toggle buttons based on the given selector
+  const toggleButtons = document.querySelectorAll(toggleSelector);
+
+  toggleButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const content = button.nextElementSibling;
+
+      // Toggle 'active' class for styling
+      button.classList.toggle("active");
+
+      // Collapse all content sections except the clicked one
+      document.querySelectorAll(contentSelector).forEach((item) => {
+        if (item !== content) {
+          item.style.maxHeight = null; // Collapse
+          item.previousElementSibling.classList.remove("active"); // Remove 'active' from other buttons
+        }
+      });
+
+      // Expand or collapse the current content
+      if (content.style.maxHeight) {
+        content.style.maxHeight = null; // Collapse
+      } else {
+        content.style.maxHeight = content.scrollHeight + "px"; // Expand
+      }
+    });
+  });
+}
+
+// Initialize collapsible sections for various sections
+initializeCollapsible(".toggle-btn", ".collapsible-content"); // Postgraduate Project
+initializeCollapsible(".about-me-toggle-btn", ".about-me-collapsible-content"); // About Me Section
+
 });
