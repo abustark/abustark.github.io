@@ -579,3 +579,58 @@ section.fade-in {
   opacity: 1;
   transform: translateY(0);
 }
+
+
+
+
+
+/* Job List Section */
+#looking-for-jobs {
+  text-align: center;
+  padding: 2rem;
+}
+
+.job-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.job-category {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  flex: 1 1 200px; /* Flexible width, minimum 200px */
+  max-width: 250px; /* Maximum width for larger screens */
+}
+
+.job-category h3 {
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.job-category ul {
+  list-style: none;
+  padding: 0;
+}
+
+.job-category li {
+  margin: 0.5rem 0;
+  color: #333;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .job-list {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .job-category {
+    width: 100%;
+    max-width: 100%;
+  }
+}
