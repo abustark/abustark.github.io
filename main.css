@@ -1,158 +1,636 @@
-// Ensure the DOM is fully loaded before executing
-document.addEventListener("DOMContentLoaded", () => {
-  // Lazy load images in the screenshots section
-  document.querySelectorAll('.screenshots img').forEach(img => {
-    img.loading = 'lazy';
-  });
+/* Reset default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  // Dark mode toggle functionality
-  const darkModeToggle = document.getElementById("dark-mode-toggle");
-  const slider = darkModeToggle.querySelector(".slider");
-  const sunIcon = document.getElementById("sun-icon");
-  const moonIcon = document.getElementById("moon-icon");
+html, body {
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  width: 100%; /* Ensure full width */
+}
 
-  // Check the saved theme or default to light mode
-  const isDarkMode = localStorage.getItem("theme") === "dark";
+html {
+  scroll-behavior: smooth;
+}
 
-  // Apply the initial theme and set toggle slider position
-  if (isDarkMode) {
-    document.body.classList.add("dark-mode");
-    sunIcon.style.opacity = "0";
-    sunIcon.style.visibility = "hidden";
-    moonIcon.style.opacity = "1";
-    moonIcon.style.visibility = "visible";
-    slider.style.transform = "translateX(30px)"; // Move slider to right for dark mode
-  } else {
-    document.body.classList.remove("dark-mode");
-    sunIcon.style.opacity = "1";
-    sunIcon.style.visibility = "visible";
-    moonIcon.style.opacity = "0";
-    moonIcon.style.visibility = "hidden";
-    slider.style.transform = "translateX(0)"; // Move slider to left for light mode
-  }
+img, table, iframe {
+  max-width: 100%; /* Ensure they don’t exceed container width */
+}
 
-  // Toggle mode and update slider position when clicking the toggle button
-  darkModeToggle.addEventListener("click", () => {
-    const isDarkModeActive = document.body.classList.toggle("dark-mode");
+/* Define global light theme variables */
+:root {
+  --bg-color: #ecf0f1;
+  --text-color: #2c3e50;
+  --primary-color: #1abc9c;
+  --secondary-color: #34495e;
+  --border-color: #3498db;
+  --button-bg: #1abc9c;
+  --button-hover-bg: #16a085;
+  --header-bg: #34495e;
+}
 
-    if (isDarkModeActive) {
-      sunIcon.style.opacity = "0";
-      sunIcon.style.visibility = "hidden";
-      moonIcon.style.opacity = "1";
-      moonIcon.style.visibility = "visible";
-      slider.style.transform = "translateX(30px)"; // Slide to the right
-      localStorage.setItem("theme", "dark");
-    } else {
-      sunIcon.style.opacity = "1";
-      sunIcon.style.visibility = "visible";
-      moonIcon.style.opacity = "0";
-      moonIcon.style.visibility = "hidden";
-      slider.style.transform = "translateX(0)"; // Slide to the left
-      localStorage.setItem("theme", "light");
-    }
-  });
+/* Light Mode Styling */
+body {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background: linear-gradient(135deg, #f6f8f9 0%, #e5ebee 100%);
+  background-size: cover; /* Ensure gradient covers the entire screen */
+  background-position: center; /* Ensure gradient is centered */
+  margin: 0;
+  padding: 0;
+}
 
-  // NEW CODE: Keyboard Accessibility for Dark Mode Toggle
-  darkModeToggle.setAttribute('role', 'switch');
-  darkModeToggle.setAttribute('aria-checked', isDarkMode);
-  darkModeToggle.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      darkModeToggle.click();
-    }
-  });
+/* Header Styles */
+header {
+  background: var(--header-bg);
+  color: white;
+  padding: 1rem 0;
+  text-align: center;
+}
 
-  // Reusable function for collapsible sections
-  function initializeCollapsible(toggleSelector, contentSelector) {
-    // Select all toggle buttons based on the given selector
-    const toggleButtons = document.querySelectorAll(toggleSelector);
+header nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
 
-    toggleButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        const content = button.nextElementSibling;
+header nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
 
-        // Toggle 'active' class for styling
-        button.classList.toggle("active");
+header nav ul li a:hover {
+  border-bottom: 2px solid var(--primary-color);
+}
 
-        // Collapse all content sections except the clicked one
-        document.querySelectorAll(contentSelector).forEach((item) => {
-          if (item !== content) {
-            item.style.maxHeight = null; // Collapse
-            item.previousElementSibling.classList.remove("active"); // Remove 'active' from other buttons
-          }
-        });
+h1, h2, h3 {
+  color: #2c3e50;
+  font-weight: 600;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+}
 
-        // Expand or collapse the current content
-        if (content.style.maxHeight) {
-          content.style.maxHeight = null; // Collapse
-        } else {
-          content.style.maxHeight = content.scrollHeight + "px"; // Expand
-        }
-      });
-    });
-  }
+h1 {
+  font-size: 2.5rem;
+}
+h2 {
+  font-size: 2rem;
+}
 
-  // Initialize collapsible sections for various sections
-  initializeCollapsible(".toggle-btn", ".collapsible-content"); // Postgraduate Project
-  initializeCollapsible(".about-me-toggle-btn", ".about-me-collapsible-content"); // About Me Section
+section {
+  background-color: rgba(255, 255, 255, 0.4); /* Frosted glass background */
+  backdrop-filter: blur(8px); /* Frosted glass effect */
+  -webkit-backdrop-filter: blur(10px); /* Safari support */
+  padding: 1rem; /* Add padding for better spacing */
+  margin: 1.5rem auto;
+  max-width: 100%; /* Ensure sections don’t overflow */
+  border-radius: 10px;
+  border: 2px solid #e0e0e0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative; /* Needed for backdrop-filter to work */
+  width: 100%; /* Ensure full width on mobile */
+  min-height: 250px; /* Adjust for mobile display */
+  box-sizing: border-box; /* Ensure padding doesn't affect layout */
+}
 
-  // NEW CODE: Typewriter Effect
-  function typeWriter(element, text, speed = 50) {
-    let i = 0;
-    function type() {
-      if (i < text.length) {
-        element.innerHTML += text.charAt(i);
-        i++;
-        setTimeout(type, speed);
-      }
-    }
-    type();
-  }
+p {
+  margin-bottom: 1rem;
+}
 
-  // Apply typewriter effect to the introduction paragraph
-  const introText = document.querySelector('#home p');
-  if (introText) {
-    const originalText = introText.textContent;
-    introText.innerHTML = ''; // Clear the content to simulate typing
-    typeWriter(introText, originalText);
-  }
+/* Project Section Styles */
+.project {
+  margin-bottom: 2rem;
+  padding: 2rem;
+  border: 3px solid var(--border-color);
+  border-color: dimgrey;
+  border-radius: 10px;
+  background-color: transparent;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  margin: 2rem auto;
+}
 
-  // NEW CODE: Fade-in animations for sections on scroll
-  const sections = document.querySelectorAll("section");
+/* Project List and Technology Styling */
+.project ul {
+  margin: 0.5rem 0;
+  padding-left: 20px;
+  list-style-type: disc;
+}
 
-  const observerOptions = {
-    root: null, // Use the viewport as the root
-    rootMargin: "0px", // No margin
-    threshold: 0.2, // Trigger when 20% of the section is visible
-  };
+.project-link {
+  margin-top: 20px; /* Add vertical space */
+}
 
-  const observerCallback = (entries, observer) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("fade-in"); // Add the fade-in class
-        observer.unobserve(entry.target); // Stop observing once animated
-      }
-    });
-  };
 
-  const observer = new IntersectionObserver(observerCallback, observerOptions);
+.project p {
+  margin-bottom: 1rem;
+}
 
-  // Observe each section
-  sections.forEach((section) => {
-    observer.observe(section);
-  });
-});
+/* Screenshot Section Styling */
+.project-screenshots {
+  margin-top: 2rem;
+}
 
-// Select all skill bars
-const skillBars = document.querySelectorAll(".skill");
+.project-screenshots h4 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
 
-// Loop through each skill bar
-skillBars.forEach((bar) => {
-  // Get the percentage value from the data-percentage attribute
-  const percentage = bar.getAttribute("data-percentage");
+.project:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.screenshots {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.screenshots img {
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Button Styling */
+/* Button 33 Styles (Updated for Blue Color) */
+.button-33 {
+  background-color: #3a86ff; /* Blue color */
+  border-radius: 100px;
+  box-shadow: rgba(58, 134, 255, .2) 0 -25px 18px -14px inset, rgba(58, 134, 255, .15) 0 1px 2px, rgba(58, 134, 255, .15) 0 2px 4px, rgba(58, 134, 255, .15) 0 4px 8px, rgba(58, 134, 255, .15) 0 8px 16px, rgba(58, 134, 255, .15) 0 16px 32px;
+  color: white; /* Text color */
+  cursor: pointer;
+  display: inline-block;
+  font-family: CerebriSans-Regular, -apple-system, system-ui, Roboto, sans-serif;
+  padding: 7px 20px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 250ms;
+  border: 0;
+  font-size: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-33:hover {
+  box-shadow: rgba(58, 134, 255, .35) 0 -25px 18px -14px inset, rgba(58, 134, 255, .25) 0 1px 2px, rgba(58, 134, 255, .25) 0 2px 4px, rgba(58, 134, 255, .25) 0 4px 8px, rgba(58, 134, 255, .25) 0 8px 16px, rgba(58, 134, 255, .25) 0 16px 32px;
+  transform: scale(1.05) rotate(-1deg);
+}
+
+
+.project-link .css-button-arrow--sky:hover {
+  padding-right: 24px;
+  padding-left: 8px;
+}
+
+.project-link .css-button-arrow--sky:hover:after {
+  opacity: 1;
+  right: 10px;
+}
+
+.project-link .css-button-arrow--sky:after {
+  content: "\00BB";
+  position: absolute;
+  opacity: 0;
+  font-size: 20px;
+  line-height: 40px;
+  top: 0;
+  right: -20px;
+  transition: 0.4s;
+}
+
+
+/* About Me Section Styles */
+.skills-visualization {
+  margin-top: 20px;
+}
+
+.skill-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skill {
+  position: relative;
+  height: 30px;
+  background-color: #e0e0e0;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.skill::before {
+  content: attr(data-skill);
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  color: #333;
+  font-weight: bold;
+}
+
+.skill::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+ background: linear-gradient(90deg, #3a86ff, #6f42c1);  width: var(--width); /* Use the CSS variable */
+  z-index: 1;
+  transition: width 1.5s ease-in-out; /* Smooth animation */
+}
+
+
+.skill:hover::before {
+  content: attr(data-skill) " - " attr(data-percentage) "%";
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+/* Footer Styles */
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: var(--header-bg);
+  color: white;
+}
+
+/* Button Styles */
+.css-button-arrow--sky {
+  min-width: 130px;
+  height: 40px;
+  color: #fff;
+  padding: 5px 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  outline: none;
+  overflow: hidden;
+  border-radius: 5px;
+  border: none;
+  background-color: #3a86ff; 
+  margin-top: 10px; /* Moves the button down slightly */ 
+}
+
+.css-button-arrow--sky:hover {
+  border-radius: 5px;
+  padding-right: 24px;
+  padding-left: 8px;
+}
+
+.css-button-arrow--sky:hover:after {
+  opacity: 1;
+  right: 10px;
+}
+
+.css-button-arrow--sky:after {
+  content: "\00BB";
+  position: absolute;
+  opacity: 0;
+  font-size: 20px;
+  line-height: 40px;
+  top: 0;
+  right: -20px;
+  transition: 0.4s;
+}
+
+/* Slide Toggle Button Styling */
+#dark-mode-toggle {
+  width: 60px;
+  height: 30px;
+  background-color: #ccc;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  cursor: pointer;
+  padding: 0 5px;
+}
+
+#dark-mode-toggle .slider {
+  width: 25px;
+  height: 25px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  left: 5px;
+  transform: translateX(0);
+  transition: transform 0.3s ease;
+}
+
+#dark-mode-toggle.active .slider {
+  transform: translateX(30px);
+}
+
+#sun-icon, #moon-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: opacity 0.3s ease;
+}
+
+#sun-icon {
+  left: 35px;
+}
+
+#moon-icon {
+  right: 35px;
+}
+
+#dark-mode-toggle.active #sun-icon {
+  opacity: 0;
+  visibility: hidden;
+}
+
+#dark-mode-toggle.active #moon-icon {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Dark Mode Styling */
+/* Dark Mode Styling */
+body.dark-mode {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
+  color: #e0e0e0;
   
-  // Set the CSS variable --width to the percentage value
-  bar.style.setProperty('--width', `${percentage}%`);
-});
-    
-}};
+  /* Darkened Gradient Background */
+  background: linear-gradient(
+    to right,
+    #12c2e9, /* Darker version of #9b59b6 */
+    #c471ed, /* Darker version of #ff69b4 */
+    #f64f59  /* Darker version of #add8e6 */
+  );
+  background-size: cover; /* Ensure gradient fully covers the screen */
+  background-position: center; /* Ensure gradient is centered */
+  margin: 0;
+  padding: 0;
+  position: relative; /* To position the overlay correctly */
+}
+
+body.dark-mode h1, 
+body.dark-mode h2, 
+body.dark-mode h3, 
+body.dark-mode h4, 
+body.dark-mode h5, 
+body.dark-mode h6 {
+  color: mediumpurple; /* Set white text color for all heading tags */
+}
+
+
+body.dark-mode::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* Dim the background in dark mode */
+  z-index: -1; /* Place the overlay behind the content */
+}
+
+
+body.dark-mode header {
+  background: #1abc9c;
+}
+
+body.dark-mode footer {
+  background: #1abc9c;
+}
+
+body.dark-mode section {
+  background-color: rgba(0, 0, 0, 0.6); /* Darker frosted background */
+}
+
+/* Collapsible button styling */
+.toggle-btn {
+  background: rgba(0, 0, 0, 0.4); /* Semi-transparent dark background */
+  border: none;
+  padding: 10px;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  color: ghostwhite; /* Adjust text color for better contrast */
+  backdrop-filter: blur(10px); /* Blur effect for glassmorphic style */
+  -webkit-backdrop-filter: blur(10px); /* Safari support */
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+}
+
+.toggle-btn.active {
+   background: rgba(50, 50, 50, 0.2); /* Adjust this to your preference */
+   color: black;
+}  
+
+/* Optionally: Add hover or focus styles */
+.toggle-btn:hover {
+  background: rebeccapurple; /* Slightly lighter on hover */
+}
+
+/* Collapsible content styling */
+.collapsible-content {
+  max-height: 0; /* Collapsed by default */
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease; /* Smooth expansion */
+  padding: 0 10px; /* Collapsed padding for smoother animation */
+  background-color: #f9f9f9; /* Default light mode background color */
+  border-radius: 5px;
+  color: #000; /* Default light mode text color */
+  border: 1px solid #ccc; /* Default light mode border */
+}
+
+/* Active state for content */
+.collapsible-content.active {
+  max-height: 500px; /* Expandable height; adjust based on content */
+  padding: 10px; /* Visible padding when expanded */
+}
+
+/* Dark Mode Styles for Collapsible Content */
+body.dark-mode .collapsible-content {
+  background-color: #1e1e1e; /* Dark gray background for dark mode */
+  color: #e0e0e0; /* Light tex t color for readability in dark mode */
+  border: 1px solid #444; /* Border to separate sections in dark mode */
+}
+
+/* Button Alignment for "View Project Details" */
+.project-link {
+  margin-top: 10px; /* Add spacing above the button */
+  display: inline-block;
+}
+
+/* Light Mode Header Section */
+header {
+  background: linear-gradient(
+    to right,
+    #9b59b6, /* Light version of #9b59b6 */
+    #ff69b4, /* Light version of #ff69b4 */
+    #add8e6  /* Light version of #add8e6 */
+  );
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Light Mode Footer Section */
+footer {
+  background: linear-gradient(
+    to right,
+    #9b59b6, /* Light version of #9b59b6 */
+    #ff69b4, /* Light version of #ff69b4 */
+    #add8e6  /* Light version of #add8e6 */
+  );
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Dark Mode Header Section */
+body.dark-mode header {
+  background: linear-gradient(
+    to right,
+    #12c2e9, /* Darker version of #9b59b6 */
+    #c471ed, /* Darker version of #ff69b4 */
+    #f64f59  /* Darker version of #add8e6 */
+  );
+  background-size: cover;
+  background-position: center;
+  color: white; /* Ensure text is readable */
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Optional: adds depth */
+}
+
+/* Dark Mode Footer Section */
+body.dark-mode footer {
+  background: linear-gradient(
+    to right,
+    #12c2e9, /* Darker version of #9b59b6 */
+    #c471ed, /* Darker version of #ff69b4 */
+    #f64f59  /* Darker version of #add8e6 */
+  );
+  background-size: cover;
+  background-position: center;
+  color: white; /* Ensure text is readable */
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.5); /* Optional: adds depth */
+}
+
+/* Add at the very end of main.css file */
+@media (max-width: 768px) {
+  header nav ul {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  section {
+    margin: 1rem;
+    padding: 1rem;
+  }
+}
+
+
+/* Animations */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px); /* Slight upward movement */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Apply the animation to sections */
+section {
+  opacity: 0; /* Start hidden */
+  transform: translateY(20px); /* Start slightly below */
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+/* Class to trigger the animation */
+section.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+
+
+
+/* Job List Section */
+#looking-for-jobs {
+  text-align: center;
+  padding: 2rem;
+}
+
+.job-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.job-category {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  flex: 1 1 200px; /* Flexible width, minimum 200px */
+  max-width: 250px; /* Maximum width for larger screens */
+}
+
+.job-category h3 {
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.job-category ul {
+  list-style: none;
+  padding: 0;
+}
+
+.job-category li {
+  margin: 0.5rem 0;
+  color: #333;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .job-list {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .job-category {
+    width: 100%;
+    max-width: 100%;
+  }
+}
