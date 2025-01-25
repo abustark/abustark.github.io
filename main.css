@@ -155,3 +155,4 @@ skillBars.forEach((bar) => {
   bar.style.setProperty('--width', `${percentage}%`);
 });
     
+}};
