@@ -141,6 +141,33 @@ document.addEventListener("DOMContentLoaded", () => {
   sections.forEach((section) => {
     observer.observe(section);
   });
+
+  // NEW CODE: Skill Tooltip Functionality
+  const skills = document.querySelectorAll(".skill");
+
+  skills.forEach((skill) => {
+    const tooltip = skill.querySelector(".skill-tooltip");
+
+    skill.addEventListener("mousemove", (e) => {
+      // Update tooltip content
+      tooltip.textContent = `${skill.getAttribute("data-skill")} - ${skill.getAttribute("data-percentage")}%`;
+
+      // Get the bounding rectangle of the skill bar
+      const rect = skill.getBoundingClientRect();
+
+      // Calculate the tooltip position relative to the skill bar
+      const tooltipX = e.clientX - rect.left; // Horizontal position
+      const tooltipY = e.clientY - rect.top; // Vertical position
+
+      // Position the tooltip at the mouse cursor
+      tooltip.style.left = `${tooltipX + 10}px`; // Add a small offset for better placement
+      tooltip.style.top = `${tooltipY - 30}px`; // Move the tooltip above the cursor
+    });
+
+    skill.addEventListener("mouseleave", () => {
+      tooltip.style.opacity = "0"; // Hide tooltip when mouse leaves
+    });
+  });
 });
 
 // Select all skill bars
