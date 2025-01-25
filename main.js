@@ -150,18 +150,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     skill.addEventListener("mousemove", (e) => {
       // Update tooltip content
-      tooltip.textContent = `${skill.getAttribute("data-skill")} - ${skill.getAttribute("data-percentage")}%`;
+      tooltip.textContent = `${skill.getAttribute("data-percentage")}%`;
 
       // Get the bounding rectangle of the skill bar
       const rect = skill.getBoundingClientRect();
 
       // Calculate the tooltip position relative to the skill bar
-      const tooltipX = e.clientX - rect.left; // Horizontal position
-      const tooltipY = e.clientY - rect.top; // Vertical position
+      let tooltipX = e.clientX - rect.left; // Horizontal position
+      let tooltipY = e.clientY - rect.top; // Vertical position
+
+      // Ensure the tooltip stays within the skill bar bounds
+      if (tooltipX < 0) tooltipX = 0; // Prevent tooltip from going outside the left edge
+      if (tooltipX > rect.width) tooltipX = rect.width; // Prevent tooltip from going outside the right edge
+      if (tooltipY < 0) tooltipY = 0; // Prevent tooltip from going outside the top edge
+      if (tooltipY > rect.height) tooltipY = rect.height; // Prevent tooltip from going outside the bottom edge
 
       // Position the tooltip at the mouse cursor
-      tooltip.style.left = `${tooltipX + 10}px`; // Add a small offset for better placement
-      tooltip.style.top = `${tooltipY - 30}px`; // Move the tooltip above the cursor
+      tooltip.style.left = `${tooltipX}px`; // Set horizontal position
+      tooltip.style.top = `${tooltipY}px`; // Set vertical position
+      tooltip.style.opacity = "1"; // Ensure the tooltip is visible
     });
 
     skill.addEventListener("mouseleave", () => {
@@ -169,7 +176,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
-
 // Select all skill bars
 const skillBars = document.querySelectorAll(".skill");
 
