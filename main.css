@@ -243,7 +243,8 @@ p {
   left: 0;
   top: 0;
   height: 100%;
- background: linear-gradient(90deg, #3a86ff, #6f42c1);  width: var(--width); /* Use the CSS variable */
+  background: linear-gradient(90deg, #3a86ff, #6f42c1); 
+  width: var(--width); /* Use the CSS variable */
   z-index: 1;
   transition: width 1.5s ease-in-out; /* Smooth animation */
 }
@@ -255,6 +256,37 @@ p {
   color: #fff;
   padding: 5px;
   border-radius: 5px;
+}
+
+.skill-tooltip {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  z-index: 3;
+  pointer-events: none; /* Ensure the tooltip doesn't interfere with hover */
+  opacity: 0; /* Hide by default */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  white-space: nowrap; /* Prevent text wrapping */
+  transform: translate(-50%, -100%); /* Move tooltip above the cursor */
+  top: -10px; /* Adjust vertical position */
+  left: 50%; /* Center horizontally */
+}
+
+.skill-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
+}
+.skill:hover .skill-tooltip {
+  opacity: 1; /* Show on hover */
 }
 
 /* Footer Styles */
