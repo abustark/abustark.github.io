@@ -116,8 +116,32 @@ document.addEventListener("DOMContentLoaded", () => {
     introText.innerHTML = ''; // Clear the content to simulate typing
     typeWriter(introText, originalText);
   }
-});
 
+  // NEW CODE: Fade-in animations for sections on scroll
+  const sections = document.querySelectorAll("section");
+
+  const observerOptions = {
+    root: null, // Use the viewport as the root
+    rootMargin: "0px", // No margin
+    threshold: 0.2, // Trigger when 20% of the section is visible
+  };
+
+  const observerCallback = (entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("fade-in"); // Add the fade-in class
+        observer.unobserve(entry.target); // Stop observing once animated
+      }
+    });
+  };
+
+  const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+  // Observe each section
+  sections.forEach((section) => {
+    observer.observe(section);
+  });
+});
 
 // Select all skill bars
 const skillBars = document.querySelectorAll(".skill");
