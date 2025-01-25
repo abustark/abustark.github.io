@@ -1,5 +1,10 @@
 // Ensure the DOM is fully loaded before executing
 document.addEventListener("DOMContentLoaded", () => {
+  // Lazy load images in the screenshots section
+  document.querySelectorAll('.screenshots img').forEach(img => {
+    img.loading = 'lazy';
+  });
+
   // Dark mode toggle functionality
   const darkModeToggle = document.getElementById("dark-mode-toggle");
   const slider = darkModeToggle.querySelector(".slider");
@@ -47,38 +52,81 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // NEW CODE: Keyboard Accessibility for Dark Mode Toggle
+  darkModeToggle.setAttribute('role', 'switch');
+  darkModeToggle.setAttribute('aria-checked', isDarkMode);
+  darkModeToggle.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      darkModeToggle.click();
+    }
+  });
+
   // Reusable function for collapsible sections
-function initializeCollapsible(toggleSelector, contentSelector) {
-  // Select all toggle buttons based on the given selector
-  const toggleButtons = document.querySelectorAll(toggleSelector);
+  function initializeCollapsible(toggleSelector, contentSelector) {
+    // Select all toggle buttons based on the given selector
+    const toggleButtons = document.querySelectorAll(toggleSelector);
 
-  toggleButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const content = button.nextElementSibling;
+    toggleButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const content = button.nextElementSibling;
 
-      // Toggle 'active' class for styling
-      button.classList.toggle("active");
+        // Toggle 'active' class for styling
+        button.classList.toggle("active");
 
-      // Collapse all content sections except the clicked one
-      document.querySelectorAll(contentSelector).forEach((item) => {
-        if (item !== content) {
-          item.style.maxHeight = null; // Collapse
-          item.previousElementSibling.classList.remove("active"); // Remove 'active' from other buttons
+        // Collapse all content sections except the clicked one
+        document.querySelectorAll(contentSelector).forEach((item) => {
+          if (item !== content) {
+            item.style.maxHeight = null; // Collapse
+            item.previousElementSibling.classList.remove("active"); // Remove 'active' from other buttons
+          }
+        });
+
+        // Expand or collapse the current content
+        if (content.style.maxHeight) {
+          content.style.maxHeight = null; // Collapse
+        } else {
+          content.style.maxHeight = content.scrollHeight + "px"; // Expand
         }
       });
-
-      // Expand or collapse the current content
-      if (content.style.maxHeight) {
-        content.style.maxHeight = null; // Collapse
-      } else {
-        content.style.maxHeight = content.scrollHeight + "px"; // Expand
-      }
     });
-  });
-}
+  }
 
-// Initialize collapsible sections for various sections
-initializeCollapsible(".toggle-btn", ".collapsible-content"); // Postgraduate Project
-initializeCollapsible(".about-me-toggle-btn", ".about-me-collapsible-content"); // About Me Section
+  // Initialize collapsible sections for various sections
+  initializeCollapsible(".toggle-btn", ".collapsible-content"); // Postgraduate Project
+  initializeCollapsible(".about-me-toggle-btn", ".about-me-collapsible-content"); // About Me Section
 
+  // NEW CODE: Typewriter Effect
+  function typeWriter(element, text, speed = 50) {
+    let i = 0;
+    function type() {
+      if (i < text.length) {
+        element.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(type, speed);
+      }
+    }
+    type();
+  }
+
+  // Apply typewriter effect to the introduction paragraph
+  const introText = document.querySelector('#home p');
+  if (introText) {
+    const originalText = introText.textContent;
+    introText.innerHTML = ''; // Clear the content to simulate typing
+    typeWriter(introText, originalText);
+  }
+});
+
+
+// Select all skill bars
+const skillBars = document.querySelectorAll(".skill");
+
+// Loop through each skill bar
+skillBars.forEach((bar) => {
+  // Get the percentage value from the data-percentage attribute
+  const percentage = bar.getAttribute("data-percentage");
+  
+  // Set the CSS variable --width to the percentage value
+  bar.style.setProperty('--width', `${percentage}%`);
 });
