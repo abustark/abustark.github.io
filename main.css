@@ -273,38 +273,6 @@ p {
   border-radius: 5px;
 }
 
-.skill-tooltip {
-  position: absolute; /* Position relative to the skill bar */
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-size: 14px;
-  z-index: 3;
-  pointer-events: none; /* Ensure the tooltip doesn't interfere with hover */
-  opacity: 0; /* Hide by default */
-  transition: opacity 0.3s ease;
-  white-space: nowrap; /* Prevent text wrapping */
-  transform: translate(-50%, -100%); /* Center the tooltip above the cursor */
-  top: 0; /* Reset top position */
-  left: 0; /* Reset left position */
-}
-
-.skill:hover .skill-tooltip {
-  opacity: 1; /* Show on hover */
-}
-
-.skill-tooltip::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border-width: 5px;
-  border-style: solid;
-  border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
-}
-
 
 /* Footer Styles */
 footer {
@@ -362,13 +330,15 @@ footer {
   background-color: #ccc;
   border-radius: 30px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
   position: absolute;
-  top: 10px;
-  right: 20px;
+  top: 25px;
+  right: 10px;
   cursor: pointer;
   padding: 0 5px;
+  align-items: center; /* Center the toggle vertically */
+  justify-content: space-between; /* Center the toggle horizontally */
+  margin-right: 20px; /* Add spacing from the edge */
 }
 
 #dark-mode-toggle .slider {
@@ -527,19 +497,20 @@ body.dark-mode .collapsible-content {
 
 /* Light Mode Header Section */
 header {
-  background: linear-gradient(
-    to right,
-    #9b59b6, /* Light version of #9b59b6 */
-    #ff69b4, /* Light version of #ff69b4 */
-    #add8e6  /* Light version of #add8e6 */
-  );
+  background: #ecf0f1;
   background-size: cover;
   background-position: center;
   color: white;
-  padding: 20px;
-  text-align: center;
+  height: 80px; /* Reduced height */
+  display: flex; /* Flexbox layout for alignment */
+  align-items: center; /* Center items vertically */
+  justify-content: space-between; /* Space between title and toggle */
+  padding: 0 20px; /* Side padding */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  position: relative;
 }
+
+
 
 /* Light Mode Footer Section */
 footer {
@@ -673,5 +644,32 @@ section.fade-in {
   section {
     margin: 1rem;
     padding: 1rem;
+  }
+}
+
+/* Portfolio Title */
+.portfolio-title {
+  font-family: penna;
+  font-size: 2.1rem; /* Reduced font size */
+  font-weight: bold;
+  background: linear-gradient(90deg, #3a86ff, #6f42c1, #ff006e, #3a86ff);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradientFlow 5s ease infinite;
+  margin: 0; /* Removed default margin */
+}
+
+/* Gradient Animation */
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
