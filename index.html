@@ -20,11 +20,11 @@
     <div class="portfolio-title">PORTFOLIO.</div>
     <nav>
       <!-- Slide Toggle for Dark Mode -->
-      <div id="dark-mode-toggle" class="toggle-switch">
-        <div class="slider"></div>
-        <span id="sun-icon" class="icon">☀️</span>
-        <span id="moon-icon" class="icon">🌙</span>
-      </div>
+      <div id="dark-mode-toggle" class="toggle-switch" aria-label="Toggle dark mode">
+  <div class="slider"></div>
+  <span id="sun-icon" class="icon">☀️</span>
+  <span id="moon-icon" class="icon">🌙</span>
+</div>
     </nav>
   </header>
 
@@ -321,6 +321,18 @@
       </ul>
     </div>
   </div>
+</section>
+
+
+<!-- Add the Contact Me section here -->
+<section id="contact">
+  <h2>Contact Me</h2>
+  <form action="https://formspree.io/f/xqaebqgb" method="POST">
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="email" name="email" placeholder="Your Email" required>
+    <textarea name="message" placeholder="Your Message" required></textarea>
+    <button type="submit">Send</button>
+  </form>
 </section>
   
   <!-- Footer Section -->
